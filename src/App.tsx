@@ -59,7 +59,7 @@ const App = () => {
       </section>
       
       <nav className={`fixed top-0 left-0 w-full py-6 px-6 flex justify-between items-center z-50 ${darkMode ? 'bg-gray-900/80 backdrop-blur-sm' : 'bg-white/80 backdrop-blur-sm'}`}>
-        <div className="text-xl tracking-tight">pages.</div>
+        <div className="text-xl tracking-tight">ai pages.</div>
         <div className="flex items-center space-x-8">
           <a href="#" className={`text-sm ${darkMode ? 'hover:text-gray-300' : 'hover:text-gray-600'} transition-colors`}>Library</a>
           <a href="#" className={`text-sm ${darkMode ? 'hover:text-gray-300' : 'hover:text-gray-600'} transition-colors`}>Features</a>
@@ -163,7 +163,7 @@ const App = () => {
       <footer className={`py-12 px-6 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
         <div className="container mx-auto flex flex-col md:flex-row justify-between items-start">
           <div className="mb-8 md:mb-0">
-            <h2 className="text-xl mb-6">pages.</h2>
+            <h2 className="text-xl mb-6">ai pages.</h2>
             <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'} max-w-xs`}>
               Your digital reading companion. Access thousands of books from anywhere, on any device.
             </p>
@@ -180,11 +180,9 @@ const App = () => {
             </div>
             
             <div>
-              <h3 className={`text-sm uppercase tracking-wider mb-4 ${darkMode ? 'text-gray-500' : 'text-gray-400'}`}>Company</h3>
+              <h3 className={`text-sm uppercase tracking-wider mb-4 ${darkMode ? 'text-gray-500' : 'text-gray-400'}`}>Developer</h3>
               <ul className={`text-sm space-y-2 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                 <li><a href="#" className={`${darkMode ? 'hover:text-white' : 'hover:text-black'} transition-colors`}>About</a></li>
-                <li><a href="#" className={`${darkMode ? 'hover:text-white' : 'hover:text-black'} transition-colors`}>Blog</a></li>
-                <li><a href="#" className={`${darkMode ? 'hover:text-white' : 'hover:text-black'} transition-colors`}>Support</a></li>
               </ul>
             </div>
           </div>
