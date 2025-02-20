@@ -1,3 +1,4 @@
+import BookList from "../Components/BookList";
 import Navbar from "../Components/Navbar";
 import { useTheme } from "../Contexts/ThemeProvider";
 const Home = () => {
@@ -106,56 +107,12 @@ const Home = () => {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {[
-              {
-                title: "The Quiet Hours",
-                author: "Elizabeth Strout",
-                category: "Fiction",
-              },
-              {
-                title: "Structural Design",
-                author: "Peter Zumthor",
-                category: "Architecture",
-              },
-              {
-                title: "The Essential Essays",
-                author: "Susan Sontag",
-                category: "Essays",
-              },
-            ].map((book, index) => (
-              <div key={index} className="group cursor-pointer">
-                <div
-                  className={`aspect-[3/4] mb-6 transition-colors flex items-center justify-center ${
-                    darkMode
-                      ? "bg-gray-700 group-hover:bg-gray-600"
-                      : "bg-gray-100 group-hover:bg-gray-200"
-                  }`}
-                >
-                  <span
-                    className={`${
-                      darkMode ? "text-gray-500" : "text-gray-300"
-                    } text-xl font-light`}
-                  >
-                    Cover
-                  </span>
-                </div>
-                <h3 className="font-light mb-1">{book.title}</h3>
-                <p
-                  className={`text-sm ${
-                    darkMode ? "text-gray-400" : "text-gray-500"
-                  }`}
-                >
-                  {book.author}
-                </p>
-                <span
-                  className={`inline-block mt-3 text-xs uppercase tracking-wider ${
-                    darkMode ? "text-gray-500" : "text-gray-400"
-                  }`}
-                >
-                  {book.category}
-                </span>
-              </div>
-            ))}
+            <BookList books={[
+      { id: "1", title: "The Quiet Hours", author: "Elizabeth Strout", tags: ["Fiction"], description: "A small town novel." },
+      { id: "2", title: "Structural Design", author: "Peter Zumthor", tags: ["Architecture"], description: "Design principles." },
+      { id: "3", title: "The Essential Essays", author: "Susan Sontag", tags: ["Essays"], description: "Collection of essays." },
+    ]
+            }/>
           </div>
         </div>
       </section>
