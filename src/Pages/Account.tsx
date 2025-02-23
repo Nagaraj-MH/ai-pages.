@@ -1,70 +1,85 @@
 import { useState, useEffect } from "react";
 import { useTheme } from "../Contexts/ThemeProvider";
 import Navbar from "../Components/Navbar";
+import { Link } from "react-router-dom";
+
+interface Book {
+  id: string;
+  title: string;
+  cover: string;
+}
+
+interface User {
+  name: string;
+  email: string;
+  profileImage: string;
+  likedBooks: Book[];
+  commentsMade: number;
+}
 
 const Account = () => {
   const { darkMode, toggleDarkMode } = useTheme();
-  const [name, setName] = useState("John Doe");
-  const [email, setEmail] = useState("johndoe@example.com");
-  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const storedImage = localStorage.getItem("profileImage");
-    if (storedImage) {
-      setProfileImage(storedImage);
-    }
+    const mockUser: User = {
+      name: "John Doe",
+      email: "johndoe@example.com",
+      profileImage: "https://via.placeholder.com/100",
+      likedBooks: [
+        { id: "1", title: "The Art of Coding", cover: "https://via.placeholder.com/80" },
+        { id: "2", title: "Advanced JavaScript", cover: "https://via.placeholder.com/80" },
+        { id: "3", title: "React Mastery", cover: "https://via.placeholder.com/80" },
+      ],
+      commentsMade: 12,
+    };
+    setUser(mockUser);
   }, []);
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfileImage(reader.result as string);
-        localStorage.setItem("profileImage", reader.result as string); // Save to localStorage
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Profile updated:", { name, email, profileImage });
-  };
+  if (!user) return <div className="text-center p-10">Loading dashboard...</div>;
 
   return (
     <div className={`min-h-screen flex flex-col ${darkMode ? "dark bg-gray-900 text-white" : "bg-white text-black"}`}>
       <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+      
+      <div className="container mx-auto px-6 py-12">
+        <h1 className="text-3xl font-medium mb-6">Dashboard</h1>
 
-      <div className="flex flex-1 items-center justify-center px-6">
-        <div className={`w-full max-w-md p-8 rounded-lg shadow-md ${darkMode ? "bg-gray-800" : "bg-gray-100"}`}>
-          <h2 className="text-3xl font-light mb-6 text-center">My Account</h2>
-
-          <div className="flex flex-col items-center mb-6">
-            <label htmlFor="profileImage" className="cursor-pointer relative">
-              {profileImage ? (
-                <img src={profileImage} alt="Profile" className="w-24 h-24 rounded-full border border-gray-300 object-cover" />
-              ) : (
-                <div className="w-24 h-24 flex items-center justify-center rounded-full border border-gray-400 bg-gray-200 text-gray-600">Upload</div>
-              )}
-              <input type="file" id="profileImage" accept="image/*" onChange={handleImageUpload} className="hidden" />
-            </label>
-            <p className="text-sm mt-2 text-gray-400">Click to upload</p>
+        <div className={`p-6 rounded-lg shadow ${darkMode ? "bg-gray-800" : "bg-gray-100"}`}>
+          <div className="flex items-center">
+            <img src={user.profileImage} alt="Profile" className="w-20 h-20 rounded-full border" />
+            <div className="ml-4">
+              <h2 className="text-xl font-semibold">{user.name}</h2>
+              <p className="text-gray-400">{user.email}</p>
+            </div>
           </div>
+        </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className={`block mb-2 ${darkMode ? "text-gray-300" : "text-gray-700"}`}>Name</label>
-              <input type="text" value={name} onChange={(e) => setName(e.target.value)} required className={`w-full px-4 py-3 rounded-md border ${darkMode ? "bg-gray-700 text-white border-gray-600" : "bg-white text-gray-800 border-gray-300"} focus:outline-none focus:ring-2 ${darkMode ? "focus:ring-gray-500" : "focus:ring-gray-400"}`} />
-            </div>
+        <div className="grid grid-cols-2 gap-6 mt-6">
+          <div className={`p-4 rounded-lg shadow text-center ${darkMode ? "bg-gray-800" : "bg-gray-100"}`}>
+            <h3 className="text-2xl font-semibold">{user.likedBooks.length}</h3>
+            <p className="text-gray-400">Liked Books</p>
+          </div>
+          <div className={`p-4 rounded-lg shadow text-center ${darkMode ? "bg-gray-800" : "bg-gray-100"}`}>
+            <h3 className="text-2xl font-semibold">{user.commentsMade}</h3>
+            <p className="text-gray-400">Comments Made</p>
+          </div>
+        </div>
 
-            <div>
-              <label className={`block mb-2 ${darkMode ? "text-gray-300" : "text-gray-700"}`}>Email</label>
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required className={`w-full px-4 py-3 rounded-md border ${darkMode ? "bg-gray-700 text-white border-gray-600" : "bg-white text-gray-800 border-gray-300"} focus:outline-none focus:ring-2 ${darkMode ? "focus:ring-gray-500" : "focus:ring-gray-400"}`} />
-            </div>
-
-            <button type="submit" className={`w-full py-3 rounded-md text-lg font-medium transition-colors ${darkMode ? "bg-white text-gray-900 hover:bg-gray-300" : "bg-gray-900 text-white hover:bg-black"}`}>Update Profile</button>
-          </form>
+        <div className="mt-8">
+          <h3 className="text-xl font-medium mb-4">Liked Books</h3>
+          <div className="flex space-x-4 overflow-x-auto">
+            {user.likedBooks.length === 0 ? (
+              <p>No liked books yet.</p>
+            ) : (
+              user.likedBooks.map((book) => (
+                <Link key={book.id} to={`/book/${book.id}`} className="flex flex-col items-center">
+                  <img src={book.cover} alt={book.title} className="w-20 h-28 rounded shadow hover:scale-105 transition-transform" />
+                  <p className="text-sm mt-2 text-center">{book.title}</p>
+                </Link>
+              ))
+            )}
+          </div>
         </div>
       </div>
     </div>
