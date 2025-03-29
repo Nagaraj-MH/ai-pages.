@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import BookList from "../Components/BookList";
 import { useTheme } from "../Contexts/ThemeProvider";
 const Home = () => {
@@ -30,15 +31,16 @@ const Home = () => {
               from any device, anytime.
             </p>
 
-            <button
+            <Link
               className={`px-8 py-3 ${
                 darkMode
                   ? "bg-white text-gray-900 hover:bg-gray-200"
                   : "bg-black text-white hover:bg-gray-900"
               } transition-colors`}
+              to="/library"
             >
               Start reading
-            </button>
+            </Link>
           </div>
         </div>
 
@@ -104,7 +106,7 @@ const Home = () => {
             Currently trending
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-12">
             <BookList books={[
       { id: "1", title: "The Quiet Hours", author: "Elizabeth Strout", tags: ["Fiction"], description: "A small town novel." },
       { id: "2", title: "Structural Design", author: "Peter Zumthor", tags: ["Architecture"], description: "Design principles." },

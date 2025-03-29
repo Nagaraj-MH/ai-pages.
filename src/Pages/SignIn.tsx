@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { useTheme } from "../Contexts/ThemeProvider";
-import Navbar from "../Components/Navbar";
 import { Link } from "react-router-dom";
 
 const SignIn = () => {
-  const { darkMode, toggleDarkMode } = useTheme();
+  const { darkMode } = useTheme();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -19,7 +18,6 @@ const SignIn = () => {
         darkMode ? "dark bg-gray-900 text-white" : "bg-white text-black"
       }`}
     >
-      <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
 
       <div className="flex flex-1 items-center justify-center px-6">
         <div

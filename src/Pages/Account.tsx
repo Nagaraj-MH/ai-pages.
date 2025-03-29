@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useTheme } from "../Contexts/ThemeProvider";
-import Navbar from "../Components/Navbar";
 import { Link } from "react-router-dom";
 
 interface Book {
@@ -18,7 +17,7 @@ interface User {
 }
 
 const Account = () => {
-  const { darkMode, toggleDarkMode } = useTheme();
+  const { darkMode } = useTheme();
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -40,7 +39,6 @@ const Account = () => {
 
   return (
     <div className={`min-h-screen flex flex-col ${darkMode ? "dark bg-gray-900 text-white" : "bg-white text-black"}`}>
-      <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
       
       <div className="container mx-auto px-6 py-12">
         <h1 className="text-3xl font-medium mb-6">Dashboard</h1>

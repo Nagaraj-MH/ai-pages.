@@ -27,7 +27,6 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, toggleDarkMode }) => {
         <Link to="/library" className={`text-sm ${darkMode ? "hover:text-gray-300" : "hover:text-gray-600"} transition-colors`}>Library</Link>
         <Link to="/features" className={`text-sm ${darkMode ? "hover:text-gray-300" : "hover:text-gray-600"} transition-colors`}>Features</Link>
 
-        {/* Profile Picture / Sign In Button */}
         {profileImage ? (
           <Link to="/account">
             <img src={profileImage} alt="Profile" className="w-10 h-10 rounded-full border border-gray-300 object-cover" />

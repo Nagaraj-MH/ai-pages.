@@ -13,7 +13,7 @@ interface Book {
   title: string;
   author: string;
   coverImage: string;
-  content: string[];
+  pdfUrl: string; // Changed from content array to pdfUrl
   likes: number;
   comments: Comment[];
 }
@@ -23,12 +23,7 @@ const mockBook: Book = {
   title: "The Art of Coding",
   author: "John Developer",
   coverImage: "https://via.placeholder.com/150",
-  content: [
-    "Page 1: Welcome to the world of coding...",
-    "Page 2: Variables and Data Types...",
-    "Page 3: Functions and Scope...",
-    "Page 4: Object-Oriented Programming...",
-  ],
+  pdfUrl: "/sample-book.pdf", // Replace with your actual PDF path
   likes: 10,
   comments: [
     { id: 1, userId: "User123", text: "Great book!" },
@@ -41,7 +36,6 @@ const BookDetails = () => {
   const { darkMode } = useTheme();
   const { bookId } = useParams(); 
   const [book, setBook] = useState<Book | null>(null);
-  const [currentPage, setCurrentPage] = useState(0);
   const [likes, setLikes] = useState(mockBook.likes);
   const [newComment, setNewComment] = useState("");
   const [comments, setComments] = useState<Comment[]>(mockBook.comments);
@@ -81,28 +75,26 @@ const BookDetails = () => {
         </aside>
 
         <main className="flex-grow">
-          <div className={`p-6 rounded shadow-md ${darkMode ? "bg-gray-800 text-white" : "bg-gray-100 text-black"}`}>
-            <p className="text-lg">{book.content[currentPage]}</p>
-          </div>
-
-          <div className="mt-4 flex justify-between">
-            <button
-              onClick={() => setCurrentPage((prev) => Math.max(0, prev - 1))}
-              disabled={currentPage === 0}
-              className={`px-4 py-2 rounded ${currentPage === 0  ? darkMode ? "bg-gray-800 text-white" : "bg-gray-100 text-black" : "bg-blue-500 text-white hover:bg-blue-600"}`}
-            >
-              ← Previous
-            </button>
-            <span className="px-4 py-2 text-lg">
-              Page {currentPage + 1} / {book.content.length}
-            </span>
-            <button
-              onClick={() => setCurrentPage((prev) => Math.min(book.content.length - 1, prev + 1))}
-              disabled={currentPage === book.content.length - 1}
-              className={`px-4 py-2 rounded ${currentPage === book.content.length - 1 ? darkMode ? "bg-gray-800 text-white" : "bg-gray-100 text-black" : "bg-blue-500 text-white hover:bg-blue-600"}`}
-            >
-              Next →
-            </button>
+          <div className={`p-6 rounded shadow-md ${darkMode ? "bg-gray-800" : "bg-gray-100"}`}>
+            {/* PDF Viewer */}
+            <div className="w-full h-96">
+              <iframe 
+                src={`${book.pdfUrl}#view=FitH`}
+                title={`${book.title} PDF`}
+                className="w-full h-full border-0"
+              />
+            </div>
+            <p className="mt-4 text-sm text-center">
+              If the PDF doesn't load correctly, you can 
+              <a 
+                href={book.pdfUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-blue-500 hover:underline ml-1"
+              >
+                download it here
+              </a>
+            </p>
           </div>
         </main>
       </div>

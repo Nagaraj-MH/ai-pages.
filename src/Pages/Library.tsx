@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useTheme } from "../Contexts/ThemeProvider";
-import Navbar from "../Components/Navbar";
 import BookList from "../Components/BookList";
 import FilterBar from "../Components/FilterBar";
 
@@ -14,7 +13,7 @@ interface Book {
 }
 
 const Library = () => {
-  const { darkMode, toggleDarkMode } = useTheme();
+  const { darkMode } = useTheme();
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [books, setBooks] = useState<Book[]>([]);
@@ -40,7 +39,6 @@ const Library = () => {
 
   return (
     <div className={`min-h-screen flex flex-col ${darkMode ? "dark bg-gray-900 text-white" : "bg-white text-black"}`}>
-      <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
       <main className="pt-24 px-6 pb-12">
         <FilterBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} selectedTags={selectedTags} setSelectedTags={setSelectedTags} allTags={allTags} />
         <BookList books={filteredBooks} />
