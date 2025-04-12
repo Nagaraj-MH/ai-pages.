@@ -20,13 +20,21 @@ const Library = () => {
   const [allTags, setAllTags] = useState<string[]>([]);
 
   useEffect(() => {
-    const booksData: Book[] = [
-      { id: "1", title: "The Quiet Hours", author: "Elizabeth Strout", tags: ["Fiction"], description: "A small town novel." },
-      { id: "2", title: "Structural Design", author: "Peter Zumthor", tags: ["Architecture"], description: "Design principles." },
-      { id: "3", title: "The Essential Essays", author: "Susan Sontag", tags: ["Essays"], description: "Collection of essays." },
-    ];
-    setBooks(booksData);
-    setAllTags(Array.from(new Set(booksData.flatMap((book) => book.tags))).sort());
+    const fetchBooks = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/api/v1/books"); // Adjust URL if needed
+        if (!response.ok) {
+          throw new Error("Failed to fetch books");
+        }
+        const booksData: Book[] = await response.json();
+        setBooks(booksData);
+        setAllTags(Array.from(new Set(booksData.flatMap((book) => book.tags))).sort());
+      } catch (error) {
+        console.error("Error fetching books:", error);
+      }
+    };
+  
+    fetchBooks();
   }, []);
 
   const filteredBooks = books.filter(

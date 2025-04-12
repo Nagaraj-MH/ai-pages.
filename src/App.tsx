@@ -8,9 +8,12 @@ import SignIn from './Pages/SignIn';
 import SignUp from './Pages/SignUp';
 import Account from './Pages/Account';
 import BookDetails from './Pages/BookDetails';
+import { AuthProvider } from './Contexts/AuthContext';
 
 function App() {
   return (
+    <AuthProvider>
+
     <ThemeProvider>
        <BrowserRouter>
         <Routes>
@@ -25,6 +28,7 @@ function App() {
         </Routes>
        </BrowserRouter>
     </ThemeProvider>
+    </AuthProvider>
   );
 }
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useTheme } from "../Contexts/ThemeProvider";
 import { Link } from "react-router-dom";
+import { signup } from "../services/api";
 
 const SignUp = () => {
   const { darkMode } = useTheme();
@@ -9,12 +10,14 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
+    const response = await signup(email, password,name);
+    alert(response.message || response.error);
     console.log("Signing up with:", { name, email, password });
   };
 

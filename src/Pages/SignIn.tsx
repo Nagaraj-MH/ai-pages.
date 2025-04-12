@@ -1,14 +1,18 @@
 import { useState } from "react";
 import { useTheme } from "../Contexts/ThemeProvider";
 import { Link } from "react-router-dom";
+import { useAuth } from "../Contexts/AuthContext";
 
 const SignIn = () => {
   const { darkMode } = useTheme();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const {loginUser}= useAuth()  
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const success = await loginUser(email, password);
+    alert(success ? "Login Successful" : "Login Failed");
     console.log("Signing in with:", { email, password });
   };
 
