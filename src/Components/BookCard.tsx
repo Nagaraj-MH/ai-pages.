@@ -5,9 +5,7 @@ interface Book {
   id: string;
   title: string;
   author: string;
-  coverImage?: string;
   tags: string[];
-  description: string;
 }
 
 const BookCard: React.FC<{ book: Book }> = ({ book }) => {
@@ -26,19 +24,30 @@ const BookCard: React.FC<{ book: Book }> = ({ book }) => {
             : "bg-gray-100 group-hover:bg-gray-200"
         }`}
       >
-        <span className={`${darkMode ? "text-gray-500" : "text-gray-300"} text-xl font-light`}>
-          {book.coverImage ? <img src={book.coverImage} alt={book.title} className="w-full h-full object-cover" /> : "Cover"}
+        <span
+          className={`${
+            darkMode ? "text-gray-500" : "text-gray-300"
+          } text-xl font-light`}
+        >
+          <img
+            src={`http://localhost:8080/api/v1/books/${book.id}/cover`}
+            alt={book.title}
+            className="w-full h-full object-cover"
+          />
         </span>
       </div>
       <h3 className="font-light text-xl mb-1">{book.title}</h3>
-      <p className={`text-sm ${darkMode ? "text-gray-400" : "text-gray-600"}`}>{book.author}</p>
-      <p className={`mt-3 text-sm ${darkMode ? "text-gray-400" : "text-gray-600"}`}>{book.description}</p>
+      <p className={`text-sm ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
+        {book.author}
+      </p>
       <div className="mt-4 flex flex-wrap gap-1">
         {book.tags.map((tag) => (
           <span
             key={`${book.id}-${tag}`}
             className={`inline-block px-2 py-1 text-xs uppercase tracking-wider ${
-              darkMode ? "bg-gray-700 text-gray-300" : "bg-gray-200 text-gray-700"
+              darkMode
+                ? "bg-gray-700 text-gray-300"
+                : "bg-gray-200 text-gray-700"
             } rounded-sm`}
           >
             {tag}

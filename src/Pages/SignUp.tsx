@@ -16,7 +16,7 @@ const SignUp = () => {
       alert("Passwords do not match!");
       return;
     }
-    const response = await signup(email, password,name);
+    const response = await signup(email, password, name);
     alert(response.message || response.error);
     console.log("Signing up with:", { name, email, password });
   };
@@ -27,7 +27,6 @@ const SignUp = () => {
         darkMode ? "dark bg-gray-900 text-white" : "bg-white text-black"
       }`}
     >
-
       <div className="flex flex-1 items-center justify-center px-6">
         <div
           className={`w-full max-w-md p-8 rounded-lg shadow-md ${

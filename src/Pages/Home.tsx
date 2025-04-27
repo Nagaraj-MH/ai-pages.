@@ -1,7 +1,36 @@
 import { Link } from "react-router-dom";
 import BookList from "../Components/BookList";
 import { useTheme } from "../Contexts/ThemeProvider";
+import { useEffect, useState } from "react";
+
 const Home = () => {
+  interface Book {
+    id: string;
+    title: string;
+    author: string;
+    tags: string[];
+  }
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:8080/api/v1/books/featured"
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch books");
+        }
+        const booksData: Book[] = await response.json();
+
+        setFeaturedBooks(booksData);
+      } catch (error) {
+        console.error("Error fetching books:", error);
+      }
+    };
+
+    fetchBooks();
+  }, []);
+  const [featuredBooks, setFeaturedBooks] = useState<Book[]>([]);
+
   const { darkMode } = useTheme();
 
   return (
@@ -10,13 +39,11 @@ const Home = () => {
         darkMode ? "dark bg-gray-900 text-white" : "bg-white text-black"
       }`}
     >
-
       <section
         className={`h-screen flex flex-col justify-center relative overflow-hidden ${
           darkMode ? "bg-gray-900" : "bg-gray-50"
         }`}
       >
-
         <div className="container mx-auto px-6 z-10">
           <div className="max-w-xl">
             <h1 className="text-5xl font-light mb-6 tracking-tight">
@@ -96,8 +123,6 @@ const Home = () => {
         </div>
       </section>
 
-
-
       <section
         className={`py-24 px-6 ${darkMode ? "bg-gray-800" : "bg-white"}`}
       >
@@ -107,12 +132,7 @@ const Home = () => {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-1 gap-12">
-            <BookList books={[
-      { id: "1", title: "The Quiet Hours", author: "Elizabeth Strout", tags: ["Fiction"], description: "A small town novel." },
-      { id: "2", title: "Structural Design", author: "Peter Zumthor", tags: ["Architecture"], description: "Design principles." },
-      { id: "3", title: "The Essential Essays", author: "Susan Sontag", tags: ["Essays"], description: "Collection of essays." },
-    ]
-            }/>
+            <BookList books={featuredBooks} />
           </div>
         </div>
       </section>
@@ -238,7 +258,6 @@ const Home = () => {
           </cite>
         </div>
       </section>
-
     </div>
   );
 };

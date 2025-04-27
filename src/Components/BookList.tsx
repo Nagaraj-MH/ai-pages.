@@ -5,9 +5,7 @@ interface Book {
   id: string;
   title: string;
   author: string;
-  coverImage?: string;
   tags: string[];
-  description: string;
 }
 
 const BookList: React.FC<{ books: Book[] }> = ({ books }) => {

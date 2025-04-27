@@ -7,7 +7,7 @@ const SignIn = () => {
   const { darkMode } = useTheme();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {loginUser}= useAuth()  
+  const { loginUser } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,7 +22,6 @@ const SignIn = () => {
         darkMode ? "dark bg-gray-900 text-white" : "bg-white text-black"
       }`}
     >
-
       <div className="flex flex-1 items-center justify-center px-6">
         <div
           className={`w-full max-w-md p-8 rounded-lg shadow-md ${
@@ -94,7 +93,9 @@ const SignIn = () => {
             <Link
               to="#"
               className={`${
-                darkMode ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-black"
+                darkMode
+                  ? "text-gray-400 hover:text-white"
+                  : "text-gray-600 hover:text-black"
               } transition-colors`}
             >
               Forgot password?
@@ -106,7 +107,9 @@ const SignIn = () => {
             <Link
               to="/signup"
               className={`font-medium ${
-                darkMode ? "text-gray-300 hover:text-white" : "text-gray-700 hover:text-black"
+                darkMode
+                  ? "text-gray-300 hover:text-white"
+                  : "text-gray-700 hover:text-black"
               } transition-colors`}
             >
               Sign Up
