@@ -6,6 +6,7 @@ interface Book {
   title: string;
   author: string;
   tags: string[];
+  description: string;
 }
 
 const BookList: React.FC<{ books: Book[] }> = ({ books }) => {

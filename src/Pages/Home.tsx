@@ -9,6 +9,7 @@ const Home = () => {
     title: string;
     author: string;
     tags: string[];
+    description: string;
   }
   useEffect(() => {
     const fetchBooks = async () => {

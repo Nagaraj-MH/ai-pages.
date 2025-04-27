@@ -1,18 +1,24 @@
 import React from "react";
 import { useTheme } from "../Contexts/ThemeProvider";
+import { useNavigate } from "react-router-dom";
 
 interface Book {
   id: string;
   title: string;
   author: string;
   tags: string[];
+  description: string;
 }
 
 const BookCard: React.FC<{ book: Book }> = ({ book }) => {
   const { darkMode } = useTheme();
-
+  const Navigate = useNavigate();
+  const handleClick = () => {
+    Navigate(`/book/${book.id}`);
+  };
   return (
     <div
+      onClick={handleClick}
       className={`group transition-all duration-300 ${
         darkMode ? "hover:bg-gray-800" : "hover:bg-gray-50"
       } p-4 rounded-lg`}
@@ -39,6 +45,13 @@ const BookCard: React.FC<{ book: Book }> = ({ book }) => {
       <h3 className="font-light text-xl mb-1">{book.title}</h3>
       <p className={`text-sm ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
         {book.author}
+      </p>
+      <p
+        className={`mt-3 text-sm ${
+          darkMode ? "text-gray-400" : "text-gray-600"
+        }`}
+      >
+        {book.description}
       </p>
       <div className="mt-4 flex flex-wrap gap-1">
         {book.tags.map((tag) => (

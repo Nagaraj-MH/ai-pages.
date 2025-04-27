@@ -7,6 +7,7 @@ interface Book {
   title: string;
   author: string;
   tags: string[];
+  description: string;
 }
 
 const Features = () => {
