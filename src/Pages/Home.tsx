@@ -2,15 +2,10 @@ import { Link } from "react-router-dom";
 import BookList from "../Components/BookList";
 import { useTheme } from "../Contexts/ThemeProvider";
 import { useEffect, useState } from "react";
+import Book from "../Models/Book"
 
 const Home = () => {
-  interface Book {
-    id: string;
-    title: string;
-    author: string;
-    tags: string[];
-    description: string;
-  }
+
   useEffect(() => {
     const fetchBooks = async () => {
       try {

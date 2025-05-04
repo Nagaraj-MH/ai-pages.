@@ -1,14 +1,9 @@
 import React from "react";
 import { useTheme } from "../Contexts/ThemeProvider";
 import { useNavigate } from "react-router-dom";
+import Book from "../Models/Book"
 
-interface Book {
-  id: string;
-  title: string;
-  author: string;
-  tags: string[];
-  description: string;
-}
+
 
 const BookCard: React.FC<{ book: Book }> = ({ book }) => {
   const { darkMode } = useTheme();

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useTheme } from "../Contexts/ThemeProvider";
 
 interface Comment {
-  userId: string;
+  username: string;
   text: string;
 }
 
@@ -21,11 +21,7 @@ const BookDetails = () => {
   const [book, setBook] = useState<Book | null>(null);
   const [likes, setLikes] = useState(0);
   const [newComment, setNewComment] = useState("");
-  const [comments, setComments] = useState<Comment[]>([
-    { userId: "User123", text: "Great book!" },
-    { userId: "AliceDev", text: "Very informative!" },
-    { userId: "CodeMaster", text: "Helped me a lot!" },
-  ]);
+  const [comments, setComments] = useState<Comment[]>([]);
 
   useEffect(() => {
     const fetchBookDetails = async () => {
@@ -78,7 +74,7 @@ const BookDetails = () => {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ content: newComment, userId: 1 }),
+          body: JSON.stringify({ content: newComment, username: "Red Tiger" }),
         }
       );
       if (!response.ok) {
@@ -161,7 +157,7 @@ const BookDetails = () => {
                   darkMode ? "border-gray-700" : "border-gray-300"
                 }`}
               >
-                <span className="font-bold">{comment.userId}: </span>
+                <span className="font-bold">{comment.username}: </span>
                 {comment.text}
               </div>
             ))

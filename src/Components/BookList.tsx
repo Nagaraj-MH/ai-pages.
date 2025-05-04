@@ -1,13 +1,7 @@
 import React from "react";
 import BookCard from "./BookCard";
+import Book from "../Models/Book"
 
-interface Book {
-  id: string;
-  title: string;
-  author: string;
-  tags: string[];
-  description: string;
-}
 
 const BookList: React.FC<{ books: Book[] }> = ({ books }) => {
   return (

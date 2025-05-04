@@ -2,13 +2,8 @@ import { useState, useEffect } from "react";
 import { useTheme } from "../Contexts/ThemeProvider";
 import BookList from "../Components/BookList";
 
-interface Book {
-  id: string;
-  title: string;
-  author: string;
-  tags: string[];
-  description: string;
-}
+import Book from "../Models/Book"
+
 
 const Features = () => {
   const { darkMode } = useTheme();

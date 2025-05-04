@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../Contexts/AuthContext";
 
 interface NavbarProps {
   darkMode: boolean;
@@ -7,14 +8,8 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ darkMode, toggleDarkMode }) => {
-  const [profileImage, setProfileImage] = useState<string | null>(null);
-
-  useEffect(() => {
-    const storedImage = localStorage.getItem("profileImage");
-    if (storedImage) {
-      setProfileImage(storedImage);
-    }
-  }, []);
+  const { token } = useAuth();
+  useEffect(() => {}, [token]);
 
   return (
     <nav
@@ -45,14 +40,13 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, toggleDarkMode }) => {
           Features
         </Link>
 
-        {profileImage ? (
-          <Link to="/account">
-            <img
-              src={profileImage}
-              alt="Profile"
-              className="w-10 h-10 rounded-full border border-gray-300 object-cover"
-            />
-          </Link>
+        {token ? (
+          <Link
+            to="/account"
+            className={`text-sm ${
+              darkMode ? "hover:text-gray-300" : "hover:text-gray-600"
+            } transition-colors`}
+          >Account</Link>
         ) : (
           <Link
             to="/signin"
