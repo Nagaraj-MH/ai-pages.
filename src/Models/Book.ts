@@ -4,5 +4,7 @@ interface Book {
   author: string;
   tags: string[];
   description: string;
+  coverImage: string;
+  pdfUrl: string;
 }
 export default Book;

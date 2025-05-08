@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTheme } from "../Contexts/ThemeProvider";
 import { Link, useNavigate } from "react-router-dom";
-import { checkUsernameAvailability, signup } from "../services/api";
+import { checkUsernameAvailability, signup } from "../services/authApi";
 import { useAuth } from "../Contexts/AuthContext";
 
 const SignUp = () => {
@@ -11,16 +11,16 @@ const SignUp = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const {token}=useAuth();
-  const Navigate=useNavigate()
+  const { token } = useAuth();
+  const Navigate = useNavigate();
   const [usernameStatus, setUsernameStatus] = useState("");
   const [usernameFeedback, setUsernameFeedback] = useState("");
 
-  useEffect(()=>{
-    if(token){
-      Navigate('/');
+  useEffect(() => {
+    if (token) {
+      Navigate("/");
     }
-  },[token])
+  }, [token]);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) {
@@ -32,7 +32,6 @@ const SignUp = () => {
       alert("Username is not available. Please choose another one.");
       return;
     }
-
 
     try {
       const response = await signup(email, password, name, username);

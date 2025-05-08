@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
-import { login } from "../services/api";
+import { login } from "../services/authApi";
 
 interface AuthContextType {
   user: string | null;
@@ -10,9 +10,13 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [user, setUser] = useState<string | null>(null);
-  const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
+  const [token, setToken] = useState<string | null>(
+    localStorage.getItem("token")
+  );
 
   const loginUser = async (email: string, password: string) => {
     const data = await login(email, password);

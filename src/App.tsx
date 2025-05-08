@@ -9,6 +9,7 @@ import SignUp from "./Pages/SignUp";
 import Account from "./Pages/Account";
 import BookDetails from "./Pages/BookDetails";
 import { AuthProvider } from "./Contexts/AuthContext";
+import PasswordReset from "./Components/ResetPassword";
 
 function App() {
   return (
@@ -70,6 +71,14 @@ function App() {
               element={
                 <Layout>
                   <BookDetails />
+                </Layout>
+              }
+            />
+            <Route
+              path="/password-reset"
+              element={
+                <Layout>
+                  <PasswordReset></PasswordReset>
                 </Layout>
               }
             />

@@ -1,4 +1,3 @@
-import User from "../Models/User"; 
 import axios from "axios";
 
 const API_URL = "http://localhost:8080/api/v1/auth";
@@ -64,16 +63,3 @@ export const checkUsernameAvailability = async (
   }
 };
 
-export const getAccountDetails = async (token: string): Promise<User> => {
-  try {
-    const response = await axios.get(`${API_URL}/getme`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data;
-  } catch (error: any) {
-    console.error("Failed to fetch account details:", error);
-    throw error.response?.data || new Error("Could not fetch account details");
-  }
-};
