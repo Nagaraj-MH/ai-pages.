@@ -62,4 +62,3 @@ export const checkUsernameAvailability = async (
     return { available: false };
   }
 };
-
