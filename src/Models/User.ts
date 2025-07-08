@@ -6,6 +6,6 @@ interface User {
   email: string;
   likedBooks: Book[];
   commentsMade: number;
-  profileImage: string;
+  profileImage: boolean;
 }
 export default User;

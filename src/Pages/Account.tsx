@@ -31,6 +31,7 @@ const Account = () => {
         try {
           const userData = await getAccountDetails(token);
           setUser(userData);
+          localStorage.setItem("userData", JSON.stringify(userData));
         } catch (error) {
           console.error("Failed to fetch account details:", error);
           setUser(null);
@@ -65,8 +66,7 @@ const Account = () => {
           if (prevUser && result) {
             return {
               ...prevUser,
-              profileImage:
-                config.apiBaseUrl + `/user/getprofile/${prevUser.username}`,
+              profileImage: true,
             };
           }
           return prevUser;
@@ -115,7 +115,7 @@ const Account = () => {
       </div>
     );
   }
-
+  console.log(user);
   if (!user) {
     return (
       <div
@@ -134,7 +134,7 @@ const Account = () => {
   }
 
   const profileImageUrl = user.profileImage
-    ? user.profileImage
+    ? config.apiBaseUrl + `/user/getprofile/${user.username}`
     : `https://ui-avatars.com/api/?name=${encodeURIComponent(
         user.name || "?"
       )}&background=random&size=100`;

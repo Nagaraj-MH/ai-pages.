@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useTheme } from "../Contexts/ThemeProvider";
-
+import { handleLike, handleUnlike } from "../services/bookApi";
+import { useAuth } from "../Contexts/AuthContext";
 interface Comment {
   username: string;
   text: string;
@@ -17,7 +18,9 @@ interface Book {
 
 const BookDetails = () => {
   const { darkMode } = useTheme();
+  const [isLiked, setIsLiked] = useState(false);
   const { bookId } = useParams();
+  const { token } = useAuth();
   const [book, setBook] = useState<Book | null>(null);
   const [likes, setLikes] = useState(0);
   const [newComment, setNewComment] = useState("");
@@ -47,20 +50,20 @@ const BookDetails = () => {
 
   if (!book) return <div className="text-center p-10">Loading book...</div>;
 
-  const handleLike = async () => {
+  const handleLikeBTN = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:8080/api/v1/books/${bookId}/like`,
-        {
-          method: "POST",
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to like book");
-      }
-
+      await handleLike(bookId!, token!);
+      setIsLiked(() => true);
       setLikes((prev) => prev + 1);
+    } catch (error) {
+      console.error("Error liking book:", error);
+    }
+  };
+  const handleUnlikeBTN = async () => {
+    try {
+      await handleUnlike(bookId!, token!);
+      setIsLiked(() => false);
+      setLikes((prev) => prev - 1);
     } catch (error) {
       console.error("Error liking book:", error);
     }
@@ -104,12 +107,21 @@ const BookDetails = () => {
           />
           <h2 className="text-2xl font-medium">{book.title}</h2>
           <p className="text-gray-500">{book.author}</p>
-          <button
-            onClick={handleLike}
-            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          >
-            👍 Like ({likes})
-          </button>
+          {isLiked ? (
+            <button
+              onClick={handleUnlikeBTN}
+              className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+            >
+              👎 Unlike ({likes})
+            </button>
+          ) : (
+            <button
+              onClick={handleLikeBTN}
+              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+              👍 Like ({likes})
+            </button>
+          )}
         </aside>
 
         <main className="flex-grow">
@@ -118,11 +130,12 @@ const BookDetails = () => {
               darkMode ? "bg-gray-800" : "bg-gray-100"
             }`}
           >
-            <div className="w-full h-96">
+            <div className="w-full h-96 rounded-lg overflow-hidden shadow-lg">
               <iframe
-                src={`${pdfUrl}#view=FitH`}
-                title={`${book.title} PDF`}
+                src={pdfUrl}
+                title={`${book.title} PDF Viewer`}
                 className="w-full h-full border-0"
+                allowFullScreen
               />
             </div>
             <p className="mt-4 text-sm text-center">
